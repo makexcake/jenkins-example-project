@@ -25,7 +25,7 @@ pipeline {
                     }
                 }
                 //verify version update
-                echo "updated to new version ${BUILD_VERSION}
+                echo "updated to new version ${BUILD_VERSION}"
             }
         }
 
