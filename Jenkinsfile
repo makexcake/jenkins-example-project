@@ -17,9 +17,12 @@ pipeline {
                 echo "increasing version..."
                 
                 script {
-                    env.BUILD_VERSION = sh (script: """cat package.json | grep version | cut -d " " -f4 | grep -o '".*"' | sed 's/"//g' """, returnStdout: true)
-                    echo env.BUILD_VERSION
+                    dir("app") {
+                        env.BUILD_VERSION = sh (script: """cat package.json | grep version | cut -d " " -f4 | grep -o '".*"' | sed 's/"//g' """, returnStdout: true)
+
+                    }
                 }
+                echo env.build
             }
         }
 
