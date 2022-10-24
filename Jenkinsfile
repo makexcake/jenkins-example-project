@@ -20,7 +20,7 @@ pipeline {
                     dir("app") {
                         //get version num before update
                         env.BUILD_VERSION = sh (script: """cat package.json | grep version | cut -d " " -f4 | grep -o '".*"' | sed 's/"//g' """, returnStdout: true)
-                        sh "echo env.BUILD_VERSION"
+                        sh "echo $BUILD_VERSION"
                         sh "npm version patch"
                         //update build version variable
                         env.BUILD_VERSION = sh (script: """cat package.json | grep version | cut -d " " -f4 | grep -o '".*"' | sed 's/"//g' """, returnStdout: true)
