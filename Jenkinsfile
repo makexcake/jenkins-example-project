@@ -15,6 +15,17 @@ pipeline {
         stage('version increment') {
             steps {
                 echo "increasing version..."
+                
+                script {
+
+                    dir("app") {
+                        sh "npm version patch"
+                        //update build version variable
+                        env.BUILD_VERSION = sh (script: """cat package.json | grep version | cut -d " " -f4 | grep -o '".*"' | sed 's/"//g' """, returnStdout: true)
+                    }
+                }
+                //verify version update
+                echo "updated to new version ${BUILD_VERSION}"
             }
         }
 
@@ -28,7 +39,9 @@ pipeline {
         //build
         stage('build') {
             steps {
+
                 echo "building and pushing to repo..."
+                
                 //build and push
             }
         }
