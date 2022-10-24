@@ -52,7 +52,7 @@ pipeline {
                 //build and push
                 script {
 
-                    withCredentials([usernamePassword(credentialsId: '<CredentialsID>', passwordVariable: 'PASSWORD', usernameVariable: 'USER')]) {
+                    withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'PASSWORD', usernameVariable: 'USER')]) {
                         sh "docker build -t makecake/mod-8-example-app:0.0.1 ."
                         sh "echo $PASSWORD | docker login -u $USER --password-stdin"
                         sh "docker push makecake/mod-8-example-app:0.0.1"
