@@ -7,44 +7,35 @@ pipeline {
         //init stage
         stage('init') {
             steps {
-                script{
-                    echo "initiating"
-                }
+                echo "initialising..."
             }
         }
 
         //increase version
         stage('version increment') {
             steps {
-                script {
-                    "increasing version.."
-                }
+                echo "increasing version..."
             }
         }
 
         //test
         stage('test') {
             steps {
-                script {
-                    echo "testing"
-                }
+                echo "testing..."
             }
         }
 
         //build
         stage('build') {
             steps {
-                script {
-                    echo "building.."
-                    //build and push to repo
-                }
-            }
+                echo "build and push repo"
+                //build and push
         }
 
         //commit version update in git repo
         stage('commit') {
-            script {
-                echo "commiting to github"
+            steps {
+                echo "comittiong to git..."
             }
         }
     }
