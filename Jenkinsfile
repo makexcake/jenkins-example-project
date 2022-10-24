@@ -22,7 +22,7 @@ pipeline {
 
                     }
                 }
-                echo env.build
+                echo env.BUILD_VERSION
             }
         }
 
