@@ -30,6 +30,7 @@ pipeline {
             steps {
                 echo "build and push repo"
                 //build and push
+            }
         }
 
         //commit version update in git repo
