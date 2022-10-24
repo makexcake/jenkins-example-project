@@ -39,7 +39,9 @@ pipeline {
         //build
         stage('build') {
             steps {
-                echo "building..."
+
+                echo "building and pushing to repo..."
+                
                 //build and push
             }
         }
