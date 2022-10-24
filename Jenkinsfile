@@ -28,7 +28,7 @@ pipeline {
         //build
         stage('build') {
             steps {
-                echo "build and push repo"
+                echo "building and pushing to repo..."
                 //build and push
             }
         }
@@ -36,7 +36,7 @@ pipeline {
         //commit version update in git repo
         stage('commit') {
             steps {
-                echo "comittiong to git..."
+                echo "comitting to git..."
             }
         }
     }
