@@ -15,6 +15,11 @@ pipeline {
         stage('version increment') {
             steps {
                 echo "increasing version..."
+                
+                script {
+                    env.BUILD_VERSION = sh (script: """cat package.json | grep version | cut -d " " -f4 | grep -o '".*"' | sed 's/"//g' """, returnStdout: true)
+                    echo env.BUILD_VERSION
+                }
             }
         }
 
@@ -28,7 +33,7 @@ pipeline {
         //build
         stage('build') {
             steps {
-                echo "build and push repo"
+                echo "building..."
                 //build and push
             }
         }
@@ -36,7 +41,7 @@ pipeline {
         //commit version update in git repo
         stage('commit') {
             steps {
-                echo "comittiong to git..."
+                echo "comitting to git..."
             }
         }
     }
