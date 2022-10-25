@@ -24,7 +24,8 @@ pipeline {
                     dir("app") {
                         sh "npm version patch"
                         //update build version variable
-                        env.BUILD_VERSION = sh (script: """cat package.json | grep version | cut -d " " -f4 | grep -o '".*"' | sed 's/"//g' """, returnStdout: true)
+                        //env.BUILD_VERSION = sh (script: """cat package.json | grep version | cut -d " " -f4 | grep -o '".*"' | sed 's/"//g' """, returnStdout: true)
+                        env.BUILD_VERSION = readJSON(file: 'package.json').version
                     }
                 }
                 //verify version update
