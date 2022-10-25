@@ -23,7 +23,7 @@ pipeline {
                 script {
 
                     dir("app") {
-                        
+
                         sh "npm version patch"
                         //update build version variable
                         env.BUILD_VERSION = readJSON(file: 'package.json').version
