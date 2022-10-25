@@ -70,7 +70,7 @@ pipeline {
         //commit version update in git repo
         stage('commit') {
             steps {
-                //webhook test
+                //webhook test 1
                 echo "comitting to git..."
             }
         }
