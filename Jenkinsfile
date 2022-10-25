@@ -3,6 +3,7 @@ pipeline {
     agent any
 
     tools {
+        //assign node
         nodejs "node"
     }
 
