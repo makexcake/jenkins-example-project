@@ -2,11 +2,6 @@ pipeline {
 
     agent any
 
-    tools {
-        //assign node
-        nodejs "node"
-    }
-
     stages {
 
         //init stage
@@ -26,9 +21,7 @@ pipeline {
                     dir("app") {
                         sh "npm version patch"
                         //update build version variable
-                        def versionFile = readJSON file: 'package.json'
-                        def version = versionFile.version
-                        env.BUILD_VERSION = $version
+                        env.BUILD_VERSION = sh (script: """cat package.json | grep version | cut -d " " -f4 | grep -o '".*"' | sed 's/"//g' """, returnStdout: true)
                     }
                 }
                 //verify version update
