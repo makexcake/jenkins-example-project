@@ -2,6 +2,7 @@ pipeline {
 
     agent any
     tools {
+        //NOTE: must have node plugin installed
         nodejs "node"
     }
 
@@ -22,9 +23,9 @@ pipeline {
                 script {
 
                     dir("app") {
+                        
                         sh "npm version patch"
                         //update build version variable
-                        //env.BUILD_VERSION = sh (script: """cat package.json | grep version | cut -d " " -f4 | grep -o '".*"' | sed 's/"//g' """, returnStdout: true)
                         env.BUILD_VERSION = readJSON(file: 'package.json').version
                     }
                 }
@@ -69,9 +70,22 @@ pipeline {
         //commit version update in git repo
         stage('commit') {
             steps {
-
-                //webhook test
                 echo "comitting to git..."
+                
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                        
+                        //NOTE: add ignore commiter strategy plugin to avoid build and push loops
+                        sh 'git status'
+                        sh 'git branch'
+                        sh 'git config --list'
+
+                        sh "git remote set-url origin https://${USER}:${PASS}@github.com/makexcake/jenkins-example-project.git"
+                        sh "git add ."
+                        sh 'git commit -m "auto version bump"'
+                        sh 'git push origin HEAD:version-fix'
+                    }
+                }
             }
         }
     }
