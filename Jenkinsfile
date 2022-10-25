@@ -76,6 +76,9 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         
                         //NOTE: add ignore commiter strategy plugin to avoid build and push loops
+                        sh 'git config --global user.name "jenkins"'
+                        sh 'git config --global user.email "jenkins@example.com"'
+
                         sh 'git status'
                         sh 'git branch'
                         sh 'git config --list'
