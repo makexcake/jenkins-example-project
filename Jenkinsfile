@@ -82,7 +82,8 @@ pipeline {
                         sh 'git status'
                         sh 'git branch'
                         sh 'git config --list'
-
+                        
+                        //NOTE: use auth token instead of password
                         sh "git remote set-url origin https://${USER}:${PASS}@github.com/makexcake/jenkins-example-project.git"
                         sh "git add ."
                         sh 'git commit -m "auto version bump"'
