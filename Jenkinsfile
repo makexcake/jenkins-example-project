@@ -99,7 +99,7 @@ pipeline {
 
                 script {
                     def dockerCmd = "docker run -p 3000:3000 -d makecake/mod-8-example-app:${BUILD_VERSION}"
-                    sshagent(['ec2-ssh-key']) {
+                    sshagent(['ec2-ssh-private']) {
                     
                         sh "ssh -o StrictHostKeyChecking=no ec2-user@3.124.194.45 ${dockerCmd}"
                     }
