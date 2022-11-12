@@ -70,7 +70,6 @@ pipeline {
         //commit version update in git repo
         stage('commit') {
             steps {
-                //webhook test 2
                 echo "comitting to git..."
                 
                 script {
@@ -96,7 +95,7 @@ pipeline {
 
         stage('deploy') {
             steps {
-                echo "deploying to ec2 server..."
+                
 
                 script {
                     def dockerCmd = "docker run -p 3000:3000 -d makecake/mod-8-example-app:${BUILD_VERSION}"
@@ -107,5 +106,5 @@ pipeline {
                 }
             }
         }
-    }
+    } 
 }
