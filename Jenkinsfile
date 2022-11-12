@@ -59,9 +59,9 @@ pipeline {
                 script {
 
                     withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'PASSWORD', usernameVariable: 'USER')]) {
-                        sh "docker build -t makecake/mod-8-example-app:${BUILD_VERSION} ."
+                        sh "docker build -t makecake/mod-8-example-app:${BUILD_VERSION}SNAPSHOT ."
                         sh "echo $PASSWORD | docker login -u $USER --password-stdin"
-                        sh "docker push makecake/mod-8-example-app:${BUILD_VERSION}"
+                        sh "docker push makecake/mod-8-example-app:${BUILD_VERSION}-SNAPSHOT"
                     }
                 }                
             }
@@ -88,7 +88,7 @@ pipeline {
                         sh "git remote set-url origin https://${USER}:${PASS}@github.com/makexcake/jenkins-example-project.git"
                         sh "git add ."
                         sh 'git commit -m "auto version bump"'
-                        sh 'git push origin HEAD:main'
+                        sh 'git push origin HEAD:add-ec2-deploy'
                     }
                 }
             }
