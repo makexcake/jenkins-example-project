@@ -1,0 +1,7 @@
+version: '1.0'
+services:
+  node-example-app:
+    image:  makecake/mod-8-example-app:1.0.12
+    ports:
+      - "3000:3000"
+    

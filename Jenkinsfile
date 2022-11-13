@@ -92,16 +92,18 @@ pipeline {
                 }
             }
         }
-
+        //run app on AWS EC2 instance
         stage('deploy') {
             steps {
                 
 
                 script {
-                    def dockerCmd = "docker run -p 3000:3000 -d makecake/mod-8-example-app:${BUILD_VERSION}"
+                    def dockerComposeCmd = "docker-compose -f docker-compose.yaml up --detach"
                     sshagent(['ec2-ssh-private']) {
-                    
-                        sh "ssh -o StrictHostKeyChecking=no ec2-user@3.124.194.45 ${dockerCmd}"
+                        
+                        //copy docker compose file to the instance and run
+                        sh "scp docker-compose.yaml ec2-user@3.124.194.45:/home/ec2-user"
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@3.124.194.45 ${dockerComposeCmd}"
                     }
                 }
             }
