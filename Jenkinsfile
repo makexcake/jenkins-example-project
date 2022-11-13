@@ -98,12 +98,12 @@ pipeline {
                 
 
                 script {
-                    def dockerComposeCmd = "docker-compose -f docker-compose.yaml up --detach"
+                    def shellCmd = "bash ./server-up.sh"
                     sshagent(['ec2-ssh-private']) {
                         
-                        //copy docker compose file to the instance and run
-                        sh "scp docker-compose.yaml ec2-user@3.124.194.45:/home/ec2-user"
-                        sh "ssh -o StrictHostKeyChecking=no ec2-user@3.124.194.45 ${dockerComposeCmd}"
+                        //copy docker compose and shell script file to EC2 instance
+                        sh "scp docker-compose.yaml server-up.sh ec2-user@3.124.194.45:/home/ec2-user"
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@3.124.194.45 ${shellCmd}"
                     }
                 }
             }
