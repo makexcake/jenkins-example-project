@@ -1,4 +1,4 @@
-version: '1.0'
+version: '3.3'
 services:
   node-example-app:
     image:  makecake/mod-8-example-app:1.0.12
