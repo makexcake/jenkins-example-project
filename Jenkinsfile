@@ -27,6 +27,8 @@ pipeline {
                         sh "npm version patch"
                         //update build version variable
                         env.BUILD_VERSION = readJSON(file: 'package.json').version
+                        //define image name variable
+                        env.IMAGE_NAME = "makecake/mod-8-example-app:${BUILD_VERSION}"
                     }
                 }
                 //verify version update
