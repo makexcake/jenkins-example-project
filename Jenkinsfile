@@ -33,7 +33,7 @@ pipeline {
                 echo "updated to new version ${BUILD_VERSION}"
 
                 //define image name variable
-                def imageName = "makecake/mod-8-example-app:${BUILD_VERSION}"
+                env.IMAGE_NAME = "makecake/mod-8-example-app:${BUILD_VERSION}"
             }
         }
 
@@ -65,10 +65,10 @@ pipeline {
 
                     withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'PASSWORD', usernameVariable: 'USER')]) {
                         //sh "docker build -t makecake/mod-8-example-app:${BUILD_VERSION} ."
-                        sh "docker build -t ${imageName} ."
+                        sh "docker build -t ${IMAGE_NAME} ."
                         sh "echo $PASSWORD | docker login -u $USER --password-stdin"
                         //sh "docker push makecake/mod-8-example-app:${BUILD_VERSION}"
-                        sh "docker push ${imageName}"
+                        sh "docker push ${IMAGE_NAME}"
                     }
                 }                
             }
