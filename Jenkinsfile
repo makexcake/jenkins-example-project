@@ -31,6 +31,9 @@ pipeline {
                 }
                 //verify version update
                 echo "updated to new version ${BUILD_VERSION}"
+
+                //define image name variable
+                def imageName = "makecake/mod-8-example-app:${BUILD_VERSION}"
             }
         }
 
@@ -54,14 +57,18 @@ pipeline {
             steps {
 
                 echo "building and pushing to repo..."
+                //define variable with the image name
+                //def imageName = "makecake/mod-8-example-app:${BUILD_VERSION}"
                 
                 //build and push
                 script {
 
                     withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'PASSWORD', usernameVariable: 'USER')]) {
-                        sh "docker build -t makecake/mod-8-example-app:${BUILD_VERSION} ."
+                        //sh "docker build -t makecake/mod-8-example-app:${BUILD_VERSION} ."
+                        sh "docker build -t ${imageName} ."
                         sh "echo $PASSWORD | docker login -u $USER --password-stdin"
-                        sh "docker push makecake/mod-8-example-app:${BUILD_VERSION}"
+                        //sh "docker push makecake/mod-8-example-app:${BUILD_VERSION}"
+                        sh "docker push ${imageName}"
                     }
                 }                
             }
