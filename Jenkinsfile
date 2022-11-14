@@ -54,11 +54,8 @@ pipeline {
         //build
         stage('build') {
             steps {
+                echo "building and pushing to repo..."     
 
-                echo "building and pushing to repo..."
-                //define variable with the image name
-                //def imageName = "makecake/mod-8-example-app:${BUILD_VERSION}"
-                
                 //build and push
                 script {
 
@@ -104,7 +101,7 @@ pipeline {
                 
 
                 script {
-                    def shellCmd = "bash ./server-up.sh"
+                    def shellCmd = "bash ./server-up.sh ${IMAGE_NAME}"
                     sshagent(['ec2-ssh-private']) {
                         
                         //copy docker compose and shell script file to EC2 instance
