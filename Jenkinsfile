@@ -33,9 +33,6 @@ pipeline {
                 }
                 //verify version update
                 echo "updated to new version ${BUILD_VERSION}"
-
-                //define image name variable
-                env.IMAGE_NAME = "makecake/mod-8-example-app:${BUILD_VERSION}"
             }
         }
 
