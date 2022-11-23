@@ -71,7 +71,7 @@ pipeline {
         }
 
         //commit version update in git repo
-        stage('commit') {
+        /*stage('commit') {
             steps {
                 echo "comitting to git..."
                 
@@ -94,9 +94,9 @@ pipeline {
                     }
                 }
             }
-        }
+        }*/
         //run app on AWS EC2 instance
-        stage('deploy') {
+        /*stage('deploy') {
             steps {
                 
 
@@ -110,6 +110,6 @@ pipeline {
                     }
                 }
             }
-        }
+        }*/
     } 
 }
