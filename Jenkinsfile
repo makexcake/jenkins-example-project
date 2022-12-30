@@ -20,7 +20,7 @@ pipeline {
             steps {
                 echo "increasing version..."
                 
-                script {
+                /*script {
 
                     dir("app") {
 
@@ -30,7 +30,7 @@ pipeline {
                     }
                 }
                 //verify version update
-                echo "updated to new version ${BUILD_VERSION}"
+                echo "updated to new version ${BUILD_VERSION}"*/
             }
         }
 
@@ -56,14 +56,14 @@ pipeline {
                 echo "building and pushing to repo..."
                 
                 //build and push
-                script {
+                /*script {
 
                     withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'PASSWORD', usernameVariable: 'USER')]) {
                         sh "docker build -t makecake/mod-8-example-app:${BUILD_VERSION} ."
                         sh "echo $PASSWORD | docker login -u $USER --password-stdin"
                         sh "docker push makecake/mod-8-example-app:${BUILD_VERSION}"
                     }
-                }                
+                }   */             
             }
         }
 
@@ -73,7 +73,7 @@ pipeline {
                 //webhook test 2
                 echo "comitting to git..."
                 
-                script {
+                /*script {
                     withCredentials([usernamePassword(credentialsId: 'github-tok', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         
                         //NOTE: add ignore commiter strategy plugin to avoid build and push loops
@@ -90,7 +90,7 @@ pipeline {
                         sh 'git commit -m "auto version bump"'
                         sh 'git push origin HEAD:main'
                     }
-                }
+                }*/
             }
         }
     }
