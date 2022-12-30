@@ -89,7 +89,7 @@ pipeline {
                         sh "git remote set-url origin https://${USER}:${PASS}@github.com/makexcake/jenkins-example-project.git"
                         sh "git add ."
                         sh 'git commit -m "auto version bump"'
-                        sh 'git push origin HEAD:main'
+                        sh 'git push origin HEAD:jenkins-setup'
                     }
                 }
             }
