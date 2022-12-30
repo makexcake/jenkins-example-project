@@ -2,7 +2,7 @@ pipeline {
 
     agent any
     tools {
-        //NOTE: must have node plugin installed
+        // PLUGINS TO BE INSTALLED: node pipiline utulity steps
         nodejs "node"
     }
 
@@ -11,7 +11,7 @@ pipeline {
         //init stage
         stage('init') {
             steps {
-                echo "initialising..."               
+                echo "initialising..."
             }
         }
 
@@ -26,11 +26,12 @@ pipeline {
 
                         sh "npm version patch"
                         //update build version variable
-                        //NOTE: pipeline utility steps plugin must be installed
                         env.BUILD_VERSION = readJSON(file: 'package.json').version
+                        //define image name variable
+                        env.IMAGE_NAME = "makecake/mod-8-example-app:${BUILD_VERSION}"
                     }
                 }
-                //verify version update in console output
+                //verify version update
                 echo "updated to new version ${BUILD_VERSION}"
             }
         }
@@ -53,29 +54,29 @@ pipeline {
         //build
         stage('build') {
             steps {
+                echo "building and pushing to repo..."     
 
-                echo "building and pushing to repo..."
-                
                 //build and push
                 script {
 
                     withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'PASSWORD', usernameVariable: 'USER')]) {
-                        sh "docker build -t makecake/mod-8-example-app:${BUILD_VERSION} ."
+                        //sh "docker build -t makecake/mod-8-example-app:${BUILD_VERSION} ."
+                        sh "docker build -t ${IMAGE_NAME} ."
                         sh "echo $PASSWORD | docker login -u $USER --password-stdin"
-                        sh "docker push makecake/mod-8-example-app:${BUILD_VERSION}"
+                        //sh "docker push makecake/mod-8-example-app:${BUILD_VERSION}"
+                        sh "docker push ${IMAGE_NAME}"
                     }
-                }             
+                }                
             }
         }
 
         //commit version update in git repo
         stage('commit') {
             steps {
-                //webhook test 2
                 echo "comitting to git..."
                 
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'github-tok', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                    withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         
                         //NOTE: add ignore commiter strategy plugin to avoid build and push loops
                         sh 'git config --global user.name "jenkins"'
@@ -94,5 +95,22 @@ pipeline {
                 }
             }
         }
-    }
+        /*
+        //run app on AWS EC2 instance
+        stage('deploy') {
+            steps {
+                
+
+                script {
+                    def shellCmd = "bash ./server-up.sh ${IMAGE_NAME}"
+                    sshagent(['ec2-ssh-private']) {
+                        
+                        //copy docker compose and shell script file to EC2 instance
+                        sh "scp docker-compose.yaml server-up.sh ec2-user@3.124.194.45:/home/ec2-user"
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@3.124.194.45 ${shellCmd}"
+                    }
+                }
+            }
+        }*/
+    } 
 }
