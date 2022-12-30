@@ -30,7 +30,7 @@ pipeline {
 
                         sh "npm version patch"
                         //update build version variable
-                        //env.BUILD_VERSION = readJSON(file: 'package.json').version
+                        env.BUILD_VERSION = readJSON(file: 'package.json').version
                     }
                 }
                 //verify version update
