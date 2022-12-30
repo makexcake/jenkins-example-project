@@ -24,17 +24,17 @@ pipeline {
             steps {
                 echo "increasing version..."
                 
-                /*script {
+                script {
 
                     dir("app") {
 
-                        sh "npm version patch"
+                        //sh "npm version patch"
                         //update build version variable
-                        env.BUILD_VERSION = readJSON(file: 'package.json').version
+                        //env.BUILD_VERSION = readJSON(file: 'package.json').version
                     }
                 }
                 //verify version update
-                echo "updated to new version ${BUILD_VERSION}"*/
+                echo "updated to new version ${BUILD_VERSION}"
             }
         }
 
