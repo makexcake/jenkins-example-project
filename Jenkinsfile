@@ -11,8 +11,7 @@ pipeline {
         //init stage
         stage('init') {
             steps {
-                echo "initialising..."     
-                //webhook test          
+                echo "initialising..."               
             }
         }
 
@@ -75,7 +74,7 @@ pipeline {
                 //webhook test 2
                 echo "comitting to git..."
                 
-                /*script {
+                script {
                     withCredentials([usernamePassword(credentialsId: 'github-tok', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         
                         //NOTE: add ignore commiter strategy plugin to avoid build and push loops
@@ -92,7 +91,7 @@ pipeline {
                         sh 'git commit -m "auto version bump"'
                         sh 'git push origin HEAD:main'
                     }
-                }*/
+                }
             }
         }
     }
