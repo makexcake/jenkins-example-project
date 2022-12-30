@@ -11,7 +11,7 @@ pipeline {
         //init stage
         stage('init') {
             steps {
-                echo "initialising..."               
+                echo "initialising..."
             }
         }
 
@@ -26,11 +26,12 @@ pipeline {
 
                         sh "npm version patch"
                         //update build version variable
-                        //NOTE: pipeline utility steps plugin must be installed
                         env.BUILD_VERSION = readJSON(file: 'package.json').version
+                        //define image name variable
+                        env.IMAGE_NAME = "makecake/mod-8-example-app:${BUILD_VERSION}"
                     }
                 }
-                //verify version update in console output
+                //verify version update
                 echo "updated to new version ${BUILD_VERSION}"
             }
         }
@@ -53,25 +54,25 @@ pipeline {
         //build
         stage('build') {
             steps {
+                echo "building and pushing to repo..."     
 
-                echo "building and pushing to repo..."
-                
                 //build and push
                 script {
 
                     withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'PASSWORD', usernameVariable: 'USER')]) {
-                        sh "docker build -t makecake/mod-8-example-app:${BUILD_VERSION} ."
+                        //sh "docker build -t makecake/mod-8-example-app:${BUILD_VERSION} ."
+                        sh "docker build -t ${IMAGE_NAME} ."
                         sh "echo $PASSWORD | docker login -u $USER --password-stdin"
-                        sh "docker push makecake/mod-8-example-app:${BUILD_VERSION}"
+                        //sh "docker push makecake/mod-8-example-app:${BUILD_VERSION}"
+                        sh "docker push ${IMAGE_NAME}"
                     }
-                }             
+                }                
             }
         }
 
         //commit version update in git repo
         stage('commit') {
             steps {
-                //webhook test 2
                 echo "comitting to git..."
                 
                 script {
@@ -94,5 +95,5 @@ pipeline {
                 }
             }
         }
-    }
+    } 
 }
