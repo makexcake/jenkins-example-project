@@ -11,11 +11,7 @@ pipeline {
         //init stage
         stage('init') {
             steps {
-                echo "initialising..."
-                //script {
-                    //env.BUILD_VERSION = '1.0.13'
-                //}
-                
+                echo "initialising..."                
             }
         }
 
@@ -30,10 +26,11 @@ pipeline {
 
                         sh "npm version patch"
                         //update build version variable
+                        //NOTE: pipeline utility steps plugin must be installed
                         env.BUILD_VERSION = readJSON(file: 'package.json').version
                     }
                 }
-                //verify version update
+                //verify version update in console output
                 echo "updated to new version ${BUILD_VERSION}"
             }
         }
