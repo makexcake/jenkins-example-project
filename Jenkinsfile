@@ -12,9 +12,9 @@ pipeline {
         stage('init') {
             steps {
                 echo "initialising..."
-                script {
-                    env.BUILD_VERSION = '1.0.13'
-                }
+                //script {
+                    //env.BUILD_VERSION = '1.0.13'
+                //}
                 
             }
         }
