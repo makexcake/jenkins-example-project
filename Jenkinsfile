@@ -56,14 +56,14 @@ pipeline {
                 echo "building and pushing to repo..."
                 
                 //build and push
-                /*script {
+                script {
 
                     withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'PASSWORD', usernameVariable: 'USER')]) {
                         sh "docker build -t makecake/mod-8-example-app:${BUILD_VERSION} ."
                         sh "echo $PASSWORD | docker login -u $USER --password-stdin"
                         sh "docker push makecake/mod-8-example-app:${BUILD_VERSION}"
                     }
-                }   */             
+                }             
             }
         }
 
