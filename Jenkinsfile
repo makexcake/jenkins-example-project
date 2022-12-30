@@ -74,7 +74,7 @@ pipeline {
                 echo "comitting to git..."
                 
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                    withCredentials([usernamePassword(credentialsId: 'github-tok', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         
                         //NOTE: add ignore commiter strategy plugin to avoid build and push loops
                         sh 'git config --global user.name "jenkins"'
