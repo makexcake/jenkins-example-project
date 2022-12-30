@@ -95,22 +95,5 @@ pipeline {
                 }
             }
         }
-        /*
-        //run app on AWS EC2 instance
-        stage('deploy') {
-            steps {
-                
-
-                script {
-                    def shellCmd = "bash ./server-up.sh ${IMAGE_NAME}"
-                    sshagent(['ec2-ssh-private']) {
-                        
-                        //copy docker compose and shell script file to EC2 instance
-                        sh "scp docker-compose.yaml server-up.sh ec2-user@3.124.194.45:/home/ec2-user"
-                        sh "ssh -o StrictHostKeyChecking=no ec2-user@3.124.194.45 ${shellCmd}"
-                    }
-                }
-            }
-        }*/
     } 
 }
