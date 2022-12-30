@@ -11,7 +11,8 @@ pipeline {
         //init stage
         stage('init') {
             steps {
-                echo "initialising..."                
+                echo "initialising..."     
+                //webhook test          
             }
         }
 
